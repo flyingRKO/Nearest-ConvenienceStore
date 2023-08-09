@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  snowbox-redis:
+    container_name: snowbox-redis
+    build:
+      dockerfile: Dockerfile
+      context: ./redis
+    image: flyingrko/snowbox-redis
+    ports:
+      - "6379:6379"
+  snowbox-database:
+    container_name: snowbox-database
+    build:
+      dockerfile: Dockerfile
+      context: ./database
+    image: flyingrko/snowbox-database
+    environment:
+      - MYSQL_DATABASE=snowbox
+      - MYSQL_ROOT_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+    ports:
+      - "3306:3306"

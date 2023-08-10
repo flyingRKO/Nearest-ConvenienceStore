@@ -15,7 +15,9 @@ services:
       context: ./database
     image: flyingrko/snowbox-database
     environment:
-      - MYSQL_DATABASE=snowbox
-      - MYSQL_ROOT_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+      - MARIADB_DATABASE=snowbox
+      - MARIADB_ROOT_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+    volumes:
+      - ./database/config:/etc/mysql/conf.d
     ports:
       - "3306:3306"

@@ -4,6 +4,10 @@ import com.example.nearestsnowboxfinder.AbstractIntegrationContainerBaseTest
 import com.example.nearestsnowboxfinder.snowbox.entity.Snowbox
 import org.springframework.beans.factory.annotation.Autowired
 
+import java.time.LocalDateTime
+
+import static java.time.LocalDateTime.now
+
 
 class SnowboxRepositoryTest extends AbstractIntegrationContainerBaseTest {
 
@@ -55,6 +59,24 @@ class SnowboxRepositoryTest extends AbstractIntegrationContainerBaseTest {
         then:
         result.size() == 1
 
+    }
+
+    def "BaseTimeEntity 등록"() {
+        given:
+        LocalDateTime now = LocalDateTime.now()
+        String address = "대전 광역시 유성구 장대동"
+
+        def snowbox = Snowbox.builder()
+                .snowboxAddress(address)
+                .build()
+
+        when:
+        snowboxRepository.save(snowbox)
+        def result = snowboxRepository.findAll()
+
+        then:
+        result.get(0).getCreatedDate().isAfter(now)
+        result.get(0).getModifiedDate().isAfter(now)
     }
 
 }

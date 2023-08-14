@@ -1,5 +1,6 @@
 package com.example.nearestsnowboxfinder.snowbox.entity;
 
+import com.example.nearestsnowboxfinder.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import javax.persistence.Id;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Snowbox {
+public class Snowbox extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

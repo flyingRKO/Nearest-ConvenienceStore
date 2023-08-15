@@ -23,6 +23,7 @@ public class Snowbox extends BaseTimeEntity {
     private Long id;
 
     private String snowboxAddress;
+    private String snowboxPlace;
     private double latitude; // 위도
     private double longitude; // 경도
 }

@@ -1,21 +1,21 @@
 version: "3.8"
 services:
-  snowbox-redis:
-    container_name: snowbox-redis
+  store-redis:
+    container_name: store-redis
     build:
       dockerfile: Dockerfile
       context: ./redis
-    image: flyingrko/snowbox-redis
+    image: flyingrko/store-redis
     ports:
       - "6379:6379"
-  snowbox-database:
-    container_name: snowbox-database
+  store-database:
+    container_name: store-database
     build:
       dockerfile: Dockerfile
       context: ./database
-    image: flyingrko/snowbox-database
+    image: flyingrko/store-database
     environment:
-      - MARIADB_DATABASE=snowbox
+      - MARIADB_DATABASE=store
       - MARIADB_ROOT_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
     volumes:
       - ./database/config:/etc/mysql/conf.d

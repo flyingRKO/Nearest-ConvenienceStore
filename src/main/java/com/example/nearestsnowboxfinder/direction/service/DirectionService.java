@@ -2,10 +2,13 @@ package com.example.nearestsnowboxfinder.direction.service;
 
 import com.example.nearestsnowboxfinder.api.dto.DocumentDto;
 import com.example.nearestsnowboxfinder.direction.entity.Direction;
+import com.example.nearestsnowboxfinder.direction.repository.DirectionRepository;
 import com.example.nearestsnowboxfinder.snowbox.service.SnowboxSearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,9 +21,16 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DirectionService {
     private final SnowboxSearchService snowboxSearchService;
+    private final DirectionRepository directionRepository;
 
     private static final int MAX_SEARCH_CNT = 3; // 제설함 최대 검색 갯수
     private static final double RADIUS_KM = 5.0; // 반경 5km
+
+    @Transactional
+    public List<Direction> saveAll(List<Direction> directionList) {
+        if (CollectionUtils.isEmpty(directionList)) return Collections.emptyList();
+        return directionRepository.saveAll(directionList);
+    }
 
     public List<Direction> buildDirectionList(DocumentDto documentDto) {
 

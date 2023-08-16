@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 public class MetaDto {
 
     @JsonProperty("total_count")
-    private String totalCount;
+    private Integer totalCount;
 }

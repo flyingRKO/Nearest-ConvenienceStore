@@ -33,6 +33,6 @@ public class Direction extends BaseTimeEntity {
     private double targetLatitude;
     private double targetLongitude;
 
-    // 사용자 주소와 제설함 주소 사이의 거리
-    private double distance;
+    // 사용자 주소와 편의점 주소 사이의 거리
+    private int distance;
 }

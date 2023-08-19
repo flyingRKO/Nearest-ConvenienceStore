@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Collections;
 import java.util.List;
@@ -23,6 +24,9 @@ import java.util.stream.Collectors;
 public class StoreRecommendationService {
     private final KaKaoAddressSearchService kaKaoAddressSearchService;
     private final DirectionService directionService;
+
+    private static final String ROAD_VIEW_BASE_URL = "https://map.kakao.com/link/roadview/";
+    private static final String DIRECTION_BASE_URL = "https://map.kakao.com/link/map/";
 
     public List<OutputDto> recommendStoreList(String address) {
         KakaoApiResponseDto kakaoApiResponseDto = kaKaoAddressSearchService.requestAddressSearch(address);
@@ -46,11 +50,20 @@ public class StoreRecommendationService {
     }
 
     private OutputDto convertToOutputDto(Direction direction) {
+
+        String params = String.join(",", direction.getTargetStoreName(),
+                String.valueOf(direction.getTargetLatitude()),
+                String.valueOf(direction.getTargetLongitude()));
+
+        String result = UriComponentsBuilder.fromHttpUrl(DIRECTION_BASE_URL + params).toUriString();
+
+        log.info("direction params: {}, url: {}", params, result);
+
         return OutputDto.builder()
                 .storeName(direction.getTargetStoreName())
                 .storeAddress(direction.getTargetAddress())
-                .directionUrl("todo")
-                .roadViewUrl("todo")
+                .directionUrl(result)
+                .roadViewUrl(ROAD_VIEW_BASE_URL + direction.getTargetLatitude() + "," + direction.getTargetLongitude())
                 .distance(String.format(direction.getDistance() + " m"))
                 .build();
     }

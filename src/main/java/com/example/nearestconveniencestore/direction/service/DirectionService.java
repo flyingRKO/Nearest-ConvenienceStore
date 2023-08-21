@@ -4,7 +4,6 @@ import com.example.nearestconveniencestore.api.dto.DocumentDto;
 import com.example.nearestconveniencestore.api.service.KakaoCategorySearchService;
 import com.example.nearestconveniencestore.direction.entity.Direction;
 import com.example.nearestconveniencestore.direction.repository.DirectionRepository;
-import com.example.nearestconveniencestore.store.service.StoreSearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,6 +22,7 @@ import java.util.stream.Collectors;
 public class DirectionService {
     private final DirectionRepository directionRepository;
     private final KakaoCategorySearchService kakaoCategorySearchService;
+    private final Base62Service base62Service;
 
     private static final int MAX_SEARCH_CNT = 5; // 편의점 최대 검색 갯수
     private static final double RADIUS_KM = 1000; // 반경 1km
@@ -31,6 +31,11 @@ public class DirectionService {
     public List<Direction> saveAll(List<Direction> directionList) {
         if (CollectionUtils.isEmpty(directionList)) return Collections.emptyList();
         return directionRepository.saveAll(directionList);
+    }
+
+    public Direction findById(String encodedId) {
+        Long decodedId = base62Service.decodeDirectionId(encodedId);
+        return directionRepository.findById(decodedId).orElse(null);
     }
 
 

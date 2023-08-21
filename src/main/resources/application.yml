@@ -34,8 +34,13 @@ spring:
     port: 6379
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     show-sql: true
+
+store:
+  recommendation:
+    base:
+      url: http://localhost:8080/dir/
 
 
 

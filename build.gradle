@@ -79,3 +79,7 @@ processTestResources {
         expand(project.properties)
     }
 }
+
+test {
+    systemProperty 'KAKAO_REST_API_KEY', System.getenv('KAKAO_REST_API_KEY')
+}

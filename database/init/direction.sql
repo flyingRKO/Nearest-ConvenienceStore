@@ -4,7 +4,7 @@ create table `direction` (
                              `id` bigint(20) not null auto_increment,
                              `created_date` datetime(6) default null,
                              `modified_date` datetime(6) default null,
-                             `distance` double not null,
+                             `distance` integer not null,
                              `input_address` varchar(255) collate utf8mb4_unicode_ci default null,
                              `input_latitude` double not null,
                              `input_longitude` double not null,

@@ -50,5 +50,21 @@ spring:
   config:
     activate:
       on-profile: prod
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://store-database:3306/store
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  redis:
+    host: store-redis
+    port: 6379
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
 
+store:
+  recommendation:
+    base:
+      url: http://43.200.108.199/dir/
 
